@@ -1,0 +1,116 @@
+Script started on 2026-02-21 23:09:16-05:00
+]0;dwong23@mason:~/cs222[dwong23@mason cs222]$ hostname
+mason.gmu.edu
+]0;dwong23@mason:~/cs222[dwong23@mason cs222]$ uname -a
+Linux mason.gmu.edu 4.18.0-553.89.1.el8_10.x86_64 #1 SMP Sat Nov 29 00:49:18 EST 2025 x86_64 x86_64 x86_64 GNU/Linux
+]0;dwong23@mason:~/cs222[dwong23@mason cs222]$ cat program2a_dwong23_triangular_number.c 
+/*CS 222 Assignment 2a
+ * David Wong
+ * The purpose of this programs is to compute a user imputted triangular number 
+ * which can also validate user input and generate a random number n.
+ * */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+//set to 0 to prompt user, 1 to randomly generate num
+#define RANDOM_N 1
+
+//function prototypes for getting a value n that works and the loop and formula ways to get the triangular number respectively
+int get_valid_n(void);
+int loop_sum(int n);
+int sum_formula(int n);
+
+int main(void){
+	//vairables that store the values of input n, and results from the loop and formula methods.
+	int n;
+	int loop_result;
+	int result_formula;
+	
+	//check value of RANDOM_N to either generate random or prompt user
+	if (RANDOM_N){
+		//random number generator
+		srand(time(NULL));
+		//generate ranodm num from 1-100
+		n = (rand() % 100) + 1;
+		printf("Random number n between 1 and 100: %d\n", n);		
+	}
+	else{
+		//asks for a valid input
+		n = get_valid_n();
+	}
+	//find triangular method using loop
+	loop_result = loop_sum(n);
+	//find trinagular method using formula
+	result_formula = sum_formula(n);
+	
+	//display reuslts of the two methods
+	printf("Result using loop: %d\n", loop_result);
+	printf("Result using formula: %d\n", result_formula);
+	
+	//checks and sees if the two results match
+	if (loop_result == result_formula)
+		printf("The two are equal\n");
+	else
+		printf("The two are not equal\n");
+
+	return 0;
+}
+//function that prompts for positive integer and validates input, should return an integer > 0
+int get_valid_n(void){
+	int n;
+
+	printf("Enter positive integer n: ");
+	scanf("%d", &n);
+	
+	//reprompts if user keeps inputting negative integer  till they enter a positive one
+	while (n <= 0){
+		printf("n must be > 0, enter again: ");
+		scanf("%d", &n);
+	}
+	return n;
+
+}
+//function that finds triangular number via interative loops
+int loop_sum(int n){
+	//set sum to 0 before starting
+	int sum = 0;
+	//loop counter
+	int i;
+	
+	//count from 1 to n, with each count adding the current value of i to sum
+	for (i = 1; i <= n; i++)
+		sum += i;
+	return sum;
+}
+//function that finds triangular number via formula given
+int sum_formula(int n){
+	return n * (n + 1) / 2;
+}
+
+/* #Define RANDOM_N = 0
+ *Enter positive integer n: -13
+ n must be > 0, enter again: 23
+ Result using loop: 276
+ Result using formula: 276
+ the two are equal
+
+#Define RANDOM_N = 1
+Random number between 1 and 100: 71
+Result using loop: 2556
+Result using formula: 2556
+the two are equal
+*/
+
+]0;dwong23@mason:~/cs222[dwong23@mason cs222]$ gcc program2a_dwong23_triangular_number.c -o program2a_dwong23_triangular_number
+]0;dwong23@mason:~/cs222[dwong23@mason cs222]$ ./prot[Kga[Kram2a_dwong23_triangular_number 
+Random number n between 1 and 100: 56
+Result using loop: 1596
+Result using formula: 1596
+The two are equal
+]0;dwong23@mason:~/cs222[dwong23@mason cs222]$ Control-d
+bash: Control-d: command not found
+]0;dwong23@mason:~/cs222[dwong23@mason cs222]$ exit
+
+Script done on 2026-02-21 23:11:02-05:00
